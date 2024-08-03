@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "kielsons_jewelry",
+	"version": "0.1",
+	"name": "Kielsons Jewelry",
+	"description": "A minecraft mod that adds a ton of useful jewelry.",
+	"authors": [
+		"_Kielson"
+	],
+	"contact": {
+		"sources": "https://github.com/Kielson-Official/_Kielson-s-Jewelry"
+	},
+	"license": "GNU GPL-3.0",
+	"icon": "assets/kielsons_jewelry/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.kielson.KielsonsJewelry"
+		],
+		"fabric-datagen": [
+			"com.kielson.datagen.KielsonsJewelryDataGenerator"
+		],
+		"client": [
+			"com.kielson.client.KielsonsJewelryClient"
+		]
+	},
+	"mixins": [
+		"kielsons_jewelry.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": ">=0.100.7",
+		"kielsonsapi": ">=0.5"
+	},
+	"accessWidener" : "kielsons_jewelry.accesswidener"
+}
