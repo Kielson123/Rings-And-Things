@@ -1,0 +1,47 @@
+{
+	"parent": "minecraft:item/generated",
+	"overrides": [
+		{
+			"predicate": {
+				"material": 0.1
+			},
+			"model": "kielsons_jewelry:item/stone_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.2
+			},
+			"model": "kielsons_jewelry:item/copper_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.3
+			},
+			"model": "kielsons_jewelry:item/iron_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.4
+			},
+			"model": "kielsons_jewelry:item/golden_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.5
+			},
+			"model": "kielsons_jewelry:item/netherite_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.6
+			},
+			"model": "kielsons_jewelry:item/bamboo_ring"
+		},
+		{
+			"predicate": {
+				"material": 0.7
+			},
+			"model": "kielsons_jewelry:item/wooden_ring"
+		}
+	]
+}

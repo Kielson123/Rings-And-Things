@@ -1,5 +1,7 @@
 package com.kielson;
 
+import com.kielson.item.ModItemGroups;
+import com.kielson.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ public class KielsonsJewelry implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		ModItems.registerModItems();
+		ModItemGroups.registerItemGroups();
 	}
 }
