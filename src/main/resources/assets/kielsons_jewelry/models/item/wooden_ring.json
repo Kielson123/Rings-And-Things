@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "kielsons_jewelry:item/ring/wooden_ring_gem",
-    "layer1": "kielsons_jewelry:item/ring/wooden_ring"
+    "layer0": "kielsons_jewelry:item/ring/wooden_ring",
+    "layer1": "kielsons_jewelry:item/ring/wooden_ring_overlay"
   }
 }

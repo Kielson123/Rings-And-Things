@@ -15,5 +15,6 @@ public class ModItems {
         return Registry.register(Registries.ITEM, Identifier.of(MOD_ID, id), item);
     }
 
-    public static void registerModItems() {int x = 1;}
+
+    public static void initialize() {}
 }

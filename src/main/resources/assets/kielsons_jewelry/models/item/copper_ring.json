@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "kielsons_jewelry:item/ring/copper_ring_gem",
-    "layer1": "kielsons_jewelry:item/ring/copper_ring"
+    "layer0": "kielsons_jewelry:item/ring/copper_ring",
+    "layer1": "kielsons_jewelry:item/ring/copper_ring_overlay"
   }
 }

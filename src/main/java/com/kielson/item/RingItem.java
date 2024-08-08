@@ -25,7 +25,7 @@ import java.util.*;
 import static com.kielson.KielsonsJewelry.MOD_ID;
 
 
-public class RingItem extends Item {
+public class RingItem extends Item{
     public static final ComponentType<Text> RING_MATERIAL = KielsonsAPIComponents.register(Identifier.of(MOD_ID, "ring_material"), builder -> builder.codec(TextCodecs.STRINGIFIED_CODEC).packetCodec(TextCodecs.REGISTRY_PACKET_CODEC).cache());
     public static final ComponentType<Text> RING_EFFECT = KielsonsAPIComponents.register(Identifier.of(MOD_ID, "ring_effect"), builder -> builder.codec(TextCodecs.STRINGIFIED_CODEC).packetCodec(TextCodecs.REGISTRY_PACKET_CODEC).cache());
 
