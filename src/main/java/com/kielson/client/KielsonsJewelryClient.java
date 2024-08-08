@@ -17,7 +17,12 @@ public class KielsonsJewelryClient implements ClientModInitializer {
     public void onInitializeClient() {
         registerModelPredicateProviders();
 
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> stack.get(DataComponentTypes.DYED_COLOR).rgb() + 0xFF000000, ModItems.RING);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> {
+            if (tintIndex == 0){
+                return stack.get(DataComponentTypes.DYED_COLOR).rgb() + 0xFF000000;
+            }
+            return 0xFFFFFFFF;
+        }, ModItems.RING);
     }
 
     private void registerModelPredicateProviders(){

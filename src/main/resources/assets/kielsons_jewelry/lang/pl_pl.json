@@ -1,5 +1,6 @@
 {
   "block.kielsons_jewelry.jewelry_table": "Stół jubilerski",
+  "container.kielsons_jewelry.jewelry": "Stół jubilerski",
 
   "item.kielsons_jewelry.wooden_dagger": "Drewniany sztylet",
   "item.kielsons_jewelry.stone_dagger": "Kamienny sztylet",
@@ -14,5 +15,7 @@
   "item.kielsons_jewelry.ring.name.gold": "Złoty pierścień",
   "item.kielsons_jewelry.ring.name.netherite": "Netherytowy pierścień",
   "item.kielsons_jewelry.ring.name.bamboo": "Bambusowy pierścień",
-  "item.kielsons_jewelry.ring.name.wood": "Drewniany pierścień"
+  "item.kielsons_jewelry.ring.name.wood": "Drewniany pierścień",
+
+  "stat.kielsons_jewelry.interact_with_jewelry_table": "Interakcji ze stołem jubilerskim"
 }

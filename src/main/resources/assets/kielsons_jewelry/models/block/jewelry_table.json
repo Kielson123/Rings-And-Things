@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "kielsons_jewelry:block/jewelry_table_bottom",
+    "east": "kielsons_jewelry:block/jewelry_table_side",
+    "north": "kielsons_jewelry:block/jewelry_table_front",
+    "particle": "kielsons_jewelry:block/jewelry_table_front",
+    "south": "kielsons_jewelry:block/jewelry_table_front",
+    "up": "kielsons_jewelry:block/jewelry_table_top",
+    "west": "kielsons_jewelry:block/jewelry_table_side"
+  }
+}

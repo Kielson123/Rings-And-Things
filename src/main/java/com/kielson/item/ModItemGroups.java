@@ -1,8 +1,12 @@
 package com.kielson.item;
 
+import com.kielson.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -19,13 +23,16 @@ public class ModItemGroups {
             return itemStack;
         }).entries((displayContext, entries) -> {
 
+            entries.add(ModBlocks.JEWELRY_TABLE.asItem());
+
             //Rings
             addRings(entries);
 
         }).build());
 
-    public static void registerItemGroups() {
-        int x = 1;
+
+    public static void initialize() {
+        addItemsToFunctional();
     }
 
     private static void addRings(ItemGroup.Entries entries) {
@@ -37,6 +44,12 @@ public class ModItemGroups {
                 entries.add(itemStack, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
             }
         }
+    }
+
+    private static void addItemsToFunctional(){
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(content -> {
+            content.addAfter(Items.BREWING_STAND, ModBlocks.JEWELRY_TABLE.asItem());
+        });
     }
 }
 
