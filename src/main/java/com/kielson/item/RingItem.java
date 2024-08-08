@@ -32,7 +32,10 @@ public class RingItem extends Item {
     public static final Identifier RING_MODIFIER_ID = Identifier.of(MOD_ID, "ring_modifier");
 
     public RingItem() {
-        super(new Settings().maxCount(1).rarity(Rarity.UNCOMMON).component(RING_MATERIAL, Text.empty()).component(RING_EFFECT, Text.empty()).component(DataComponentTypes.DYED_COLOR, new DyedColorComponent(1, false)));
+        super(new Settings().maxCount(1).rarity(Rarity.UNCOMMON)
+                .component(RING_MATERIAL, Text.empty())
+                .component(RING_EFFECT, Text.empty())
+                .component(DataComponentTypes.DYED_COLOR, new DyedColorComponent(0xFFFFFF, false)));
     }
 
     private static AttributeModifiersComponent createAttributeModifiers(ItemStack itemStack) {
@@ -82,7 +85,8 @@ public class RingItem extends Item {
         IRON(0.3f),
         GOLD(0.4f),
         NETHERITE(0.5f),
-        BAMBOO(0.6f);
+        BAMBOO(0.6f),
+        WOOD(0.7f);
 
         public final float modelPredicateProvider;
 
@@ -93,7 +97,7 @@ public class RingItem extends Item {
     public enum RingEffects {
         NONE(new RingAttribute(KielsonsEntityAttributes.ITEM_PICK_UP_RANGE, -10, EntityAttributeModifier.Operation.ADD_VALUE));
 
-        public final RingAttribute attribute;
+        private final RingAttribute attribute;
 
         RingEffects(RingAttribute attribute) {
             this.attribute = attribute;

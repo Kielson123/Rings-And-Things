@@ -30,9 +30,9 @@ public class ModItemGroups {
 
     private static void addRings(ItemGroup.Entries entries) {
         for (RingItem.RingMaterials material : RingItem.RingMaterials.values()) {
-            for (RingItem.RingEffects gem : RingItem.RingEffects.values()){
+            for (RingItem.RingEffects effect : RingItem.RingEffects.values()){
                 ItemStack itemStack = new ItemStack(ModItems.RING);
-                RingItem.setEffect(itemStack, gem);
+                RingItem.setEffect(itemStack, effect);
                 RingItem.setMaterial(itemStack, material);
                 entries.add(itemStack, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
             }
