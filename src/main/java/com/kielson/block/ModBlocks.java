@@ -1,7 +1,9 @@
 package com.kielson.block;
 
+import com.kielson.block.entity.JewelryTableBlockEntity;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -24,4 +26,9 @@ public class ModBlocks {
     }
 
     public static void initialize() {}
+
+    public static class ModBlockEntities{
+        public static final BlockEntityType<JewelryTableBlockEntity> JEWELRY_TABLE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                Identifier.of(MOD_ID, "jewelry_table"), BlockEntityType.Builder.create(JewelryTableBlockEntity::new, JEWELRY_TABLE).build());
+    }
 }

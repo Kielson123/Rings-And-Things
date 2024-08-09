@@ -1,216 +1,97 @@
 package com.kielson.screen;
 
-import net.minecraft.block.Blocks;
+import com.kielson.block.entity.JewelryTableBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
-import net.minecraft.recipe.CraftingRecipe;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeMatcher;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.book.RecipeBookCategory;
-import net.minecraft.recipe.input.CraftingRecipeInput;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.ScreenHandlerType;
-import net.minecraft.screen.slot.CraftingResultSlot;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class JewelryScreenHandler extends ScreenHandler {
-    public static final int RESULT_ID = 0;
-    private static final int INPUT_START = 1;
-    private static final int INPUT_END = 10;
-    private static final int INVENTORY_START = 10;
-    private static final int INVENTORY_END = 37;
-    private static final int HOTBAR_START = 37;
-    private static final int HOTBAR_END = 46;
-    private final RecipeInputInventory input = new CraftingInventory(this, 3, 3);
-    private final CraftingResultInventory result = new CraftingResultInventory();
-    private final ScreenHandlerContext context;
-    private final PlayerEntity player;
-    private boolean filling;
+    private final Inventory inventory;
+    private final PropertyDelegate propertyDelegate;
+    public final JewelryTableBlockEntity blockEntity;
 
-    public JewelryScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-        super(ScreenHandlerType.CRAFTING, syncId);
-        this.context = context;
-        this.player = playerInventory.player;
-        this.addSlot(new CraftingResultSlot(playerInventory.player, this.input, this.result, 0, 124, 35));
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.input, j + i * 3, 30 + j * 18, 17 + i * 18));
-            }
-        }
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-
-        for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
-        }
+    public JewelryScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf) {
+        this(syncId, inventory, inventory.player.getWorld().getBlockEntity(buf.readBlockPos()), new ArrayPropertyDelegate(2));
     }
 
-    protected static void updateResult(ScreenHandler handler, World world, PlayerEntity player, RecipeInputInventory craftingInventory, CraftingResultInventory resultInventory, @Nullable RecipeEntry<CraftingRecipe> recipe) {
-        if (!world.isClient) {
-            CraftingRecipeInput craftingRecipeInput = craftingInventory.createRecipeInput();
-            ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
-            ItemStack itemStack = ItemStack.EMPTY;
-            Optional<RecipeEntry<CraftingRecipe>> optional = world.getServer().getRecipeManager().getFirstMatch(RecipeType.CRAFTING, craftingRecipeInput, world, recipe);
-            if (optional.isPresent()) {
-                RecipeEntry<CraftingRecipe> recipeEntry = (RecipeEntry<CraftingRecipe>)optional.get();
-                CraftingRecipe craftingRecipe = recipeEntry.value();
-                if (resultInventory.shouldCraftRecipe(world, serverPlayerEntity, recipeEntry)) {
-                    ItemStack itemStack2 = craftingRecipe.craft(craftingRecipeInput, world.getRegistryManager());
-                    if (itemStack2.isItemEnabled(world.getEnabledFeatures())) {
-                        itemStack = itemStack2;
-                    }
+    public JewelryScreenHandler(int syncId, PlayerInventory playerInventory, BlockEntity blockEntity, PropertyDelegate arrayPropertyDelegate) {
+        super(ModScreenHandlers.JEWELRY_SCREEN_HANDLER, syncId);
+        checkSize(((Inventory) blockEntity), 2);
+        this.inventory = ((Inventory) blockEntity);
+        inventory.onOpen(playerInventory.player);
+        this.propertyDelegate = arrayPropertyDelegate;
+        this.blockEntity = ((JewelryTableBlockEntity) blockEntity);
+
+        this.addSlot(new Slot(inventory, 0, 80, 11));
+        this.addSlot(new Slot(inventory, 1, 80, 59));
+
+
+        addPlayerInventory(playerInventory);
+        addPlayerHotbar(playerInventory);
+
+        addProperties(arrayPropertyDelegate);
+    }
+
+    public boolean isCrafting() {
+        return propertyDelegate.get(0) > 0;
+    }
+
+    public int getScaledProgress() {
+        int progress = this.propertyDelegate.get(0);
+        int maxProgress = this.propertyDelegate.get(1);  // Max Progress
+        int progressArrowSize = 26; // This is the width in pixels of your arrow
+
+        return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
+    }
+
+    @Override
+    public ItemStack quickMove(PlayerEntity player, int invSlot) {
+        ItemStack newStack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(invSlot);
+        if (slot != null && slot.hasStack()) {
+            ItemStack originalStack = slot.getStack();
+            newStack = originalStack.copy();
+            if (invSlot < this.inventory.size()) {
+                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
+                    return ItemStack.EMPTY;
                 }
+            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+                return ItemStack.EMPTY;
             }
 
-            resultInventory.setStack(RESULT_ID, itemStack);
-            handler.setPreviousTrackedSlot(RESULT_ID, itemStack);
-            serverPlayerEntity.networkHandler.sendPacket(new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), RESULT_ID, itemStack));
+            if (originalStack.isEmpty()) {
+                slot.setStack(ItemStack.EMPTY);
+            } else {
+                slot.markDirty();
+            }
         }
-    }
 
-    @Override
-    public void onContentChanged(Inventory inventory) {
-        if (!this.filling) {
-            this.context.run((world, pos) -> updateResult(this, world, this.player, this.input, this.result, null));
-        }
-    }
-
-    @Override
-    public void onInputSlotFillStart() {
-        this.filling = true;
-    }
-
-    @Override
-    public void onInputSlotFillFinish(RecipeEntry<CraftingRecipe> recipe) {
-        this.filling = false;
-        this.context.run((world, pos) -> updateResult(this, world, this.player, this.input, this.result, recipe));
-    }
-
-    @Override
-    public void populateRecipeFinder(RecipeMatcher finder) {
-        this.input.provideRecipeInputs(finder);
-    }
-
-    @Override
-    public void clearCraftingSlots() {
-        this.input.clear();
-        this.result.clear();
-    }
-
-    @Override
-    public boolean matches(RecipeEntry<CraftingRecipe> recipe) {
-        return recipe.value().matches(this.input.createRecipeInput(), this.player.getWorld());
-    }
-
-    @Override
-    public void onClosed(PlayerEntity player) {
-        super.onClosed(player);
-        this.context.run((world, pos) -> this.dropInventory(player, this.input));
+        return newStack;
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return canUse(this.context, player, Blocks.CRAFTING_TABLE);
+        return this.inventory.canPlayerUse(player);
     }
 
-    @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot2 = this.slots.get(slot);
-        if (slot2 != null && slot2.hasStack()) {
-            ItemStack itemStack2 = slot2.getStack();
-            itemStack = itemStack2.copy();
-            if (slot == RESULT_ID) {
-                this.context.run((world, pos) -> itemStack2.getItem().onCraftByPlayer(itemStack2, world, player));
-                if (!this.insertItem(itemStack2, INVENTORY_START, HOTBAR_END, true)) {
-                    return ItemStack.EMPTY;
-                }
-
-                slot2.onQuickTransfer(itemStack2, itemStack);
-            } else if (slot >= INVENTORY_START && slot < HOTBAR_END) {
-                if (!this.insertItem(itemStack2, INPUT_START, INPUT_END, false)) {
-                    if (slot < INVENTORY_END) {
-                        if (!this.insertItem(itemStack2, HOTBAR_START, HOTBAR_END, false)) {
-                            return ItemStack.EMPTY;
-                        }
-                    } else if (!this.insertItem(itemStack2, INVENTORY_START, INVENTORY_END, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-            } else if (!this.insertItem(itemStack2, INVENTORY_START, HOTBAR_END, false)) {
-                return ItemStack.EMPTY;
-            }
-
-            if (itemStack2.isEmpty()) {
-                slot2.setStack(ItemStack.EMPTY);
-            } else {
-                slot2.markDirty();
-            }
-
-            if (itemStack2.getCount() == itemStack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot2.onTakeItem(player, itemStack2);
-            if (slot == RESULT_ID) {
-                player.dropItem(itemStack2, false);
+    private void addPlayerInventory(PlayerInventory playerInventory) {
+        for (int i = 0; i < 3; ++i) {
+            for (int l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, 8 + l * 18, 84 + i * 18));
             }
         }
-
-        return itemStack;
     }
 
-    @Override
-    public boolean canInsertIntoSlot(ItemStack stack, Slot slot) {
-        return slot.inventory != this.result && super.canInsertIntoSlot(stack, slot);
-    }
-
-    @Override
-    public int getCraftingResultSlotIndex() {
-        return RESULT_ID;
-    }
-
-    @Override
-    public int getCraftingWidth() {
-        return this.input.getWidth();
-    }
-
-    @Override
-    public int getCraftingHeight() {
-        return this.input.getHeight();
-    }
-
-    @Override
-    public int getCraftingSlotCount() {
-        return INPUT_END;
-    }
-
-    @Override
-    public RecipeBookCategory getCategory() {
-        return RecipeBookCategory.CRAFTING;
-    }
-
-    @Override
-    public boolean canInsertIntoSlot(int index) {
-        return index != this.getCraftingResultSlotIndex();
+    private void addPlayerHotbar(PlayerInventory playerInventory) {
+        for (int i = 0; i < 9; ++i) {
+            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
+        }
     }
 }
