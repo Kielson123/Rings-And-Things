@@ -50,6 +50,7 @@ public class RingItem extends Item{
         ItemStack itemStack = new ItemStack(this);
         RingItem.setMaterial(itemStack, RingMaterials.STONE);
         RingItem.setEffect(itemStack, RingEffects.NONE);
+        RingItem.setRandomColor(itemStack);
         return itemStack;
     }
 
@@ -77,6 +78,10 @@ public class RingItem extends Item{
     public static void setEffect(@NotNull ItemStack stack, @NotNull RingItem.RingEffects ringGem) {
         stack.set(RING_EFFECT, Text.literal(ringGem.toString().toLowerCase()));
         stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, createAttributeModifiers(stack));
+    }
+
+    public static void setRandomColor(@NotNull ItemStack stack) {
+        stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent((new Random().nextInt(0, 0xFFFFFF)) + 0xFF000000, false));
     }
 
     public enum RingMaterials{

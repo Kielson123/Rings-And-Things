@@ -42,8 +42,8 @@ public class JewelryTableBlock extends Block{
         }
     }
 
-    @Override
+    /*@Override
     protected NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) -> new JewelryScreenHandler(syncId, inventory, (PacketByteBuf) ScreenHandlerContext.create(world, pos)), TITLE);
-    }
+    }*/
 }

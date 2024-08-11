@@ -10,10 +10,25 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ArrayPropertyDelegate;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import org.jetbrains.annotations.Nullable;
 
 public class JewelryScreenHandler extends ScreenHandler {
-    private final Inventory inventory;
+    protected JewelryScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId) {
+        super(type, syncId);
+    }
+
+    @Override
+    public ItemStack quickMove(PlayerEntity player, int slot) {
+        return null;
+    }
+
+    @Override
+    public boolean canUse(PlayerEntity player) {
+        return false;
+    }
+    /*private final Inventory inventory;
     private final PropertyDelegate propertyDelegate;
     public final JewelryTableBlockEntity blockEntity;
 
@@ -93,5 +108,5 @@ public class JewelryScreenHandler extends ScreenHandler {
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
-    }
+    }*/
 }

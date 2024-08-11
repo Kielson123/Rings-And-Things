@@ -3,6 +3,8 @@ package com.kielson.item;
 import com.kielson.block.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.DyedColorComponent;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ public class ModItemGroups {
             ItemStack itemStack = new ItemStack(ModItems.RING);
             RingItem.setEffect(itemStack, RingItem.RingEffects.NONE);
             RingItem.setMaterial(itemStack, RingItem.RingMaterials.BAMBOO);
+            itemStack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent(0xFF55FFFF, false));
             return itemStack;
         }).entries((displayContext, entries) -> {
 
@@ -41,6 +44,7 @@ public class ModItemGroups {
                 ItemStack itemStack = new ItemStack(ModItems.RING);
                 RingItem.setEffect(itemStack, effect);
                 RingItem.setMaterial(itemStack, material);
+                RingItem.setRandomColor(itemStack);
                 entries.add(itemStack, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
             }
         }
