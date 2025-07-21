@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.10-SNAPSHOT'
 	id 'maven-publish'
 	id "com.modrinth.minotaur" version "2.+"
 }
@@ -21,11 +21,13 @@ repositories {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/kielsons_jewelry.accesswidener")
+	accessWidenerPath = file("src/main/resources/rings_and_things.accesswidener")
 }
 
 fabricApi {
-	configureDataGeneration()
+	configureDataGeneration() {
+		client = true
+	}
 }
 
 dependencies {
@@ -34,8 +36,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	modApi("maven.modrinth:_kielsons-api:${project.kielsonsapi_version}")
-	
+	include(modApi("maven.modrinth:kielsons-api:${project.kielsonsapi_version}"))
 }
 
 processResources {
@@ -84,7 +85,6 @@ modrinth {
 	loaders = ["fabric"]
 	dependencies {
 		required.project "fabric-api"
-		required.project "_kielsons-api"
-		optional.project "_kielsons-enhanced-combat"
+		embedded.project "kielsons-api"
 	}
 }

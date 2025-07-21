@@ -1,0 +1,22 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "rings_and_things:ring",
+    "cases": [
+      {
+        "when": {
+
+        },
+        "model": {
+          "type": "minecraft:model",
+          "model": "rings_and_things:item/golden_ring"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "rings_and_things:item/iron_ring"
+    }
+  }
+}

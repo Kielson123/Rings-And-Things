@@ -1,6 +1,6 @@
 package com.kielson.screen;
 
-import com.kielson.block.entity.JewelryTableBlockEntity;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

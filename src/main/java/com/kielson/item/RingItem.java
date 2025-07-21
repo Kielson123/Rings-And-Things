@@ -2,6 +2,8 @@ package com.kielson.item;
 
 import com.kielson.KielsonsAPIComponents;
 import com.kielson.KielsonsEntityAttributes;
+import com.kielson.util.RingComponent;
+import com.mojang.serialization.Codec;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -12,6 +14,9 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
@@ -22,23 +27,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-import static com.kielson.KielsonsJewelry.MOD_ID;
+import static com.kielson.RingsAndThings.MOD_ID;
 
 
 public class RingItem extends Item{
-    public static final ComponentType<Text> RING_MATERIAL = KielsonsAPIComponents.register(Identifier.of(MOD_ID, "ring_material"), builder -> builder.codec(TextCodecs.STRINGIFIED_CODEC).packetCodec(TextCodecs.REGISTRY_PACKET_CODEC).cache());
-    public static final ComponentType<Text> RING_EFFECT = KielsonsAPIComponents.register(Identifier.of(MOD_ID, "ring_effect"), builder -> builder.codec(TextCodecs.STRINGIFIED_CODEC).packetCodec(TextCodecs.REGISTRY_PACKET_CODEC).cache());
-
+    public static final ComponentType<RingComponent> RING_COMPONENT = Registry.register(
+            Registries.DATA_COMPONENT_TYPE,
+            Identifier.of(MOD_ID, "ring"),
+            ComponentType.<RingComponent>builder().codec(RingComponent.CODEC).build()
+    );
     public static final Identifier RING_MODIFIER_ID = Identifier.of(MOD_ID, "ring_modifier");
 
-    public RingItem() {
-        super(new Settings().maxCount(1).rarity(Rarity.UNCOMMON)
-                .component(RING_MATERIAL, Text.empty())
-                .component(RING_EFFECT, Text.empty())
-                .component(DataComponentTypes.DYED_COLOR, new DyedColorComponent(0xFFFFFF, false)));
+    public RingItem(Settings settings) {
+        super(settings.maxCount(1).rarity(Rarity.UNCOMMON)
+                .component(RING_COMPONENT, new RingComponent("gold", ""))
+                .component(DataComponentTypes.DYED_COLOR, new DyedColorComponent(0xFFFFFF)));
     }
 
-    private static AttributeModifiersComponent createAttributeModifiers(ItemStack itemStack) {
+    /*private static AttributeModifiersComponent createAttributeModifiers(ItemStack itemStack) {
         RingEffects ringEffect = RingEffects.valueOf(itemStack.getOrDefault(RING_EFFECT, Text.literal("")).getString().toUpperCase());
         AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
         builder.add(ringEffect.attribute.entityAttribute, new EntityAttributeModifier(RING_MODIFIER_ID, ringEffect.attribute.value, ringEffect.attribute.operation), AttributeModifierSlot.OFFHAND);
@@ -82,7 +88,7 @@ public class RingItem extends Item{
 
     public static void setRandomColor(@NotNull ItemStack stack) {
         stack.set(DataComponentTypes.DYED_COLOR, new DyedColorComponent((new Random().nextInt(0, 0xFFFFFF)) + 0xFF000000, false));
-    }
+    }*/
 
     public enum RingMaterials{
         STONE(0.1f),

@@ -1,0 +1,21 @@
+{
+  "block.rings_and_things.jewelry_table": "Jewelry Table",
+  "container.rings_and_things.jewelry": "Jewelry Table",
+
+  "item.rings_and_things.wooden_dagger": "Wooden Dagger",
+  "item.rings_and_things.stone_dagger": "Stone Dagger",
+  "item.rings_and_things.iron_dagger": "Iron Dagger",
+  "item.rings_and_things.golden_dagger": "Golden Dagger",
+  "item.rings_and_things.diamond_dagger": "Diamond Dagger",
+  "item.rings_and_things.netherite_dagger": "Netherite Dagger",
+
+  "item.rings_and_things.ring.name.stone": "Stone Ring",
+  "item.rings_and_things.ring.name.copper": "Copper Ring",
+  "item.rings_and_things.ring.name.iron": "Iron Ring",
+  "item.rings_and_things.ring.name.gold": "Golden Ring",
+  "item.rings_and_things.ring.name.netherite": "Netherite Ring",
+  "item.rings_and_things.ring.name.bamboo": "Bamboo Ring",
+  "item.rings_and_things.ring.name.wood": "Wooden Ring",
+
+  "stat.rings_and_things.interact_with_jewelry_table": "Interactions with Jewelry Table"
+}

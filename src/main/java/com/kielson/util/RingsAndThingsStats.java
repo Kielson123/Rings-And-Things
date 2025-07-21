@@ -6,9 +6,9 @@ import net.minecraft.stat.StatFormatter;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 
-import static com.kielson.KielsonsJewelry.MOD_ID;
+import static com.kielson.RingsAndThings.MOD_ID;
 
-public class ModStats {
+public class RingsAndThingsStats {
 
     public static final Identifier INTERACT_WITH_JEWELRY_TABLE = register("interact_with_jewelry_table", StatFormatter.DEFAULT);
 

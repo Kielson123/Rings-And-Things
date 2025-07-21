@@ -1,38 +1,37 @@
 {
 	"schemaVersion": 1,
-	"id": "kielsons_jewelry",
+	"id": "rings_and_things",
 	"version": "0.1",
-	"name": "Kielsons Jewelry",
+	"name": "Rings & Things",
 	"description": "A minecraft mod that adds a ton of useful jewelry.",
 	"authors": [
 		"_Kielson"
 	],
 	"contact": {
-		"sources": "https://github.com/Kielson-Official/_Kielson-s-Jewelry"
+		"sources": "https://github.com/Kielson123/_Kielson-s-Jewelry"
 	},
 	"license": "GNU GPL-3.0",
-	"icon": "assets/kielsons_jewelry/icon.png",
+	"icon": "assets/rings_and_things/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.kielson.KielsonsJewelry"
+          "com.kielson.RingsAndThings"
 		],
 		"fabric-datagen": [
-			"com.kielson.datagen.KielsonsJewelryDataGenerator"
+			"com.kielson.datagen.RingsAndThingsDataGenerator"
 		],
 		"client": [
-			"com.kielson.client.KielsonsJewelryClient"
+			"com.kielson.client.RingsAndThingsClient"
 		]
 	},
 	"mixins": [
-		"kielsons_jewelry.mixins.json"
+		"rings_and_things.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.11",
-		"minecraft": "~1.21",
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.5",
 		"java": ">=21",
-		"fabric-api": ">=0.100.7",
-		"kielsonsapi": ">=0.5.1"
+		"fabric-api": ">=0.124.2"
 	},
-	"accessWidener" : "kielsons_jewelry.accesswidener"
+	"accessWidener" : "rings_and_things.accesswidener"
 }

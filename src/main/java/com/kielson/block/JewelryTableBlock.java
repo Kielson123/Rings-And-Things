@@ -1,22 +1,17 @@
 package com.kielson.block;
 
-import com.kielson.screen.JewelryScreenHandler;
-import com.kielson.util.ModStats;
+import com.kielson.util.RingsAndThingsStats;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import static com.kielson.KielsonsJewelry.MOD_ID;
+import static com.kielson.RingsAndThings.MOD_ID;
 
 public class JewelryTableBlock extends Block{
     public static final MapCodec<JewelryTableBlock> CODEC = createCodec(JewelryTableBlock::new);
@@ -37,7 +32,7 @@ public class JewelryTableBlock extends Block{
             return ActionResult.SUCCESS;
         } else {
             player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            player.incrementStat(ModStats.INTERACT_WITH_JEWELRY_TABLE);
+            player.incrementStat(RingsAndThingsStats.INTERACT_WITH_JEWELRY_TABLE);
             return ActionResult.CONSUME;
         }
     }

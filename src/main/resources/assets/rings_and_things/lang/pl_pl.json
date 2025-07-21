@@ -1,0 +1,21 @@
+{
+  "block.rings_and_things.jewelry_table": "Stół jubilerski",
+  "container.rings_and_things.jewelry": "Stół jubilerski",
+
+  "item.rings_and_things.wooden_dagger": "Drewniany sztylet",
+  "item.rings_and_things.stone_dagger": "Kamienny sztylet",
+  "item.rings_and_things.iron_dagger": "Żelazny sztylet",
+  "item.rings_and_things.golden_dagger": "Złoty sztylet",
+  "item.rings_and_things.diamond_dagger": "Diamentowy sztylet",
+  "item.rings_and_things.netherite_dagger": "Netherytowy sztylet",
+
+  "item.rings_and_things.ring.name.stone": "Kamienny pierścień",
+  "item.rings_and_things.ring.name.copper": "Miedziany pierścień",
+  "item.rings_and_things.ring.name.iron": "Żelazny pierścień",
+  "item.rings_and_things.ring.name.gold": "Złoty pierścień",
+  "item.rings_and_things.ring.name.netherite": "Netherytowy pierścień",
+  "item.rings_and_things.ring.name.bamboo": "Bambusowy pierścień",
+  "item.rings_and_things.ring.name.wood": "Drewniany pierścień",
+
+  "stat.rings_and_things.interact_with_jewelry_table": "Interakcji ze stołem jubilerskim"
+}
